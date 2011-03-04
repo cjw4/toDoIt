@@ -10,8 +10,8 @@
 	},
 	
 	"icons": {
-		"16": "toDoIt16.png",
-		"128": "toDoIt128.png"
+		"16": "images/toDoIt16.png",
+		"128": "images/toDoIt128.png"
 	},
 	
 	"permissions": [

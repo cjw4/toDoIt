@@ -1,0 +1,20 @@
+{
+	"name": "ToDoIt",
+	"version": "1.0",
+	"description": "An app to organize your tasks and feel good about getting things done!",
+	
+	"app": {
+		"launch": {
+			"local_path": "index.html"
+		}
+	},
+	
+	"icons": {
+		"16": "toDoIt16.png",
+		"128": "toDoIt128.png"
+	},
+	
+	"permissions": [
+		"unlimitedStorage"
+	]
+}

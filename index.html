@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link type="text/css" href="style.css" rel="stylesheet">
+	<link type="text/css" href="datepicker.css" rel="stylesheet">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="javascript.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+	<div class="container">
+	<div class="header"><img src="toDoIt_header.png" /></div>
+	<div id="time"></div>
+
+	<div>
+		<span class="taskHeader">Task</span>
+		<span class="finishByHeader">Finish By</span>
+	</div>		
+	<div>
+	<input type="text" id="todoInput" />
+	<input type="text" id="finishByInput" />
+	<input type="button" value="Add Task" id="addTask" />
+	</div>
+	
+	<ul id="todo">
+		<!-- todo tasks go here -->
+	</ul>
+	
+	</div><!-- end container div-->
+	<div class="container">
+	<div>
+		<span class="finishedTasks">Finished Tasks</span>
+	</div>
+	<ul id="finished">
+		<!--finished tasks go here -->
+	<input type="button" value="Clear Finished" id="clearLog">
+	</ul>
+	</div><!-- end container div-->
+	<hr />
+	<div id="footer">
+		<p>Developed as open source code by Chris Walker</p>
+		<p>Fork this project on <a href="#">github</a></p>
+	</div>
+	</div><!-- end wrapper div-->	
+</body>
+</html>

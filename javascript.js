@@ -37,7 +37,8 @@ $(document).ready(function() {
 });
 
 function addTask() {
-	// jQuery command to get the input values
+	
+	// get the input values
 	var taskInput = $('#todoInput').val();
 	var finishByInput = $('#finishByInput').val()
 	var complete = "";
@@ -57,62 +58,8 @@ function addTask() {
 		// commit the values to the localStorage database
 		localStorage.setItem(itemId, inputValues.join(";"));
 		
-			// take the values from the localStorage database
-			var outputValues = localStorage.getItem(itemId).split(";");
-			taskValue = outputValues[0];
-			finishByValue = outputValues[1];
-
-			// create a container for the task to live in
-			// <div><li class="task">taskValue goes here</li></div>
-			var taskContainer = $("<div>");
-			var listItem = $("<li>").attr("class", "task");
-			listItem.text(taskValue);
-
-			// create a container for the finishByInput to live in
-			// <span id="finishBy">finishByInput goes here</span>
-			var finishByContainer = $("<span>").attr("class", "finishBy");
-			finishByContainer.text(finishByValue);
-
-			//create a delete button for each task
-			// <input type="button" value="delete" />
-			var deleteButton = $("<input>");
-			deleteButton.attr("type", "button").attr("value", "x").attr("class", "delete").bind("click",
-				function() {
-					var inputDiv = this.parentNode;
-					inputDiv.parentNode.removeChild(inputDiv);
-					localStorage.removeItem(itemId);
-				});
-
-			// create a finished checkbox for each task
-			// <input type="checkbox" />
-			var doneCheckbox = $("<input>").attr("name", itemId);
-			doneCheckbox.attr("type", "checkbox").attr("class", "complete").bind("click", 
-				function() {
-					var itemKey = $(this).attr("name");
-					var inputDiv = this.parentNode;
-					inputDiv.parentNode.removeChild(inputDiv);
-					var finishedTask = localStorage.getItem(itemKey).split(";");
-					var task = finishedTask[0];
-				
-					// alert localStorage database that the task is complete
-					finishedTask[2] = "complete";
-					
-					// commit the values to the localStorage database
-					localStorage.setItem(itemKey, finishedTask.join(";"));
-				
-					// create a container for finished task to liv in
-					// <div><li class="finishedTask">finishedTask</li><div>
-					var finishedTaskContainer = $("<div>");
-					var finishedTaskListItem = $("<li>").attr("class", "finishedTask").text(task);
-					finishedTaskContainer.append(finishedTaskListItem);
-					$("#finished").append(finishedTaskContainer);
-				});
-
-			// add the delete button and finished checkbox to the task container
-			taskContainer.append(listItem).append(finishByContainer).append(doneCheckbox).append(deleteButton);
-
-			// attach it to the unordered list with id="todo"
-			$("#todo").append(taskContainer);			
+		getTaskItem(itemId);
+			
 };
 
 function getAllItems() {
@@ -123,80 +70,79 @@ function getAllItems() {
 		// read the values from the localStorage database
 		itemId = localStorage.key(i);
 		
-		// take the values from the localStorage database
-		var outputValues = localStorage.getItem(itemId).split(";");
-		var taskValue = outputValues[0];
-		var finishByValue = outputValues[1];
-		var complete = outputValues[2];
-		
-		if (complete !== "complete") {
+		getTaskItem(itemId);
+	}
+};
 
-			// create a container for the task to live in
-			// <div><li class="task">taskValue goes here</li></div>
-			var taskContainer = $("<div>").attr("id", itemId);
-			var listItem = $("<li>").attr("class", "task").bind("click", function(){
-				var text = this.innerHTML;
-				var div = console.log(this.parentNode);
-				var newListItem = $("<li>").attr("class", "task").text(text);
-				this.parentNode.replaceChild(this,div);
+function getTaskItem(itemId) {
+	
+	// take the values from the localStorage database
+	var outputValues = localStorage.getItem(itemId).split(";");
+	var taskValue = outputValues[0];
+	var finishByValue = outputValues[1];
+	var complete = outputValues[2];
+
+	if (complete !== "complete") {
+		// create a container for the task to live in
+		// <div><li class="task">taskValue goes here</li></div>
+		var taskContainer = $("<div>").attr("id", itemId);
+		var listItem = $("<li>").attr("class", "task");
+		listItem.text(taskValue);
+
+		// create a container for the finishByInput to live in
+		// <span id="finishBy">finishByInput goes here</span>
+		var finishByContainer = $("<span>").attr("class", "finishBy");
+		finishByContainer.text(finishByValue);
+
+		//create a delete button for each task
+		// <input type="button" value="delete" />
+		var deleteButton = $("<input>").attr("name", itemId);
+		deleteButton.attr("type", "button").attr("value", "x").attr("class", "delete").bind("click",
+			function() {
+				var inputDiv = this.parentNode;
+				inputDiv.parentNode.removeChild(inputDiv);
+				var ItemKey = $(this).attr("name");
+				localStorage.removeItem(itemId);
 			});
-			listItem.text(taskValue);
 
-			// create a container for the finishByInput to live in
-			// <span id="finishBy">finishByInput goes here</span>
-			var finishByContainer = $("<span>").attr("class", "finishBy");
-			finishByContainer.text(finishByValue);
+		// create a finished checkbox for each task
+		// <input type="checkbox" />
+		var doneCheckbox = $("<input>").attr("name", itemId);
+		doneCheckbox.attr("type", "checkbox").attr("class", "complete").bind("click", 
+			function() {
+				var itemKey = $(this).attr("name");
+				var inputDiv = this.parentNode;
+				inputDiv.parentNode.removeChild(inputDiv);
+				var finishedTask = localStorage.getItem(itemKey).split(";");
+				var task = finishedTask[0];
+		
+				// alert localStorage database that the task is complete
+				finishedTask[2] = "complete";
+			
+				// commit the values to the localStorage database
+				localStorage.setItem(itemKey, finishedTask.join(";"));
+		
+				// create a container for finished task to live in
+				// <div><li class="finishedTask">finishedTask</li><div>
+				var finishedTaskContainer = $("<div>").attr("name", itemId);
+				var finishedTaskListItem = $("<li>").attr("class", "finishedTask").text(task);
+				finishedTaskContainer.append(finishedTaskListItem);
+				$("#finished").append(finishedTaskContainer);
+			});
 
-			//create a delete button for each task
-			// <input type="button" value="delete" />
-			var deleteButton = $("<input>").attr("name", itemId);
-			deleteButton.attr("type", "button").attr("value", "x").attr("class", "delete").bind("click",
-				function() {
-					var inputDiv = this.parentNode;
-					inputDiv.parentNode.removeChild(inputDiv);
-					var itemKey = $(this).attr("name");
-					localStorage.removeItem(itemKey);
-				});
+		// add the delete button and finished checkbox to the task container
+		taskContainer.append(listItem).append(finishByContainer).append(doneCheckbox).append(deleteButton);
 
-			// create a finished checkbox for each task
-			// <input type="checkbox" />
-			var doneCheckbox = $("<input>").attr("name", itemId);
-			doneCheckbox.attr("type", "checkbox").attr("class", "complete").bind("click", 
-				function() {
-					var itemKey = $(this).attr("name");
-					var inputDiv = this.parentNode;
-					inputDiv.parentNode.removeChild(inputDiv);
-					var finishedTask = localStorage.getItem(itemKey).split(";");
-					var task = finishedTask[0];
-				
-					// alert localStorage database that the task is complete
-					finishedTask[2] = "complete";
-					
-					// commit the values to the localStorage database
-					localStorage.setItem(itemKey, finishedTask.join(";"));
-				
-					// create a container for finished task to liv in
-					// <div><li class="finishedTask">finishedTask</li><div>
-					var finishedTaskContainer = $("<div>");
-					var finishedTaskListItem = $("<li>").attr("class", "finishedTask").text(task);
-					finishedTaskContainer.append(finishedTaskListItem);
-					$("#finished").append(finishedTaskContainer);
-				
-				});
-
-			// add the delete button and finished checkbox to the task container
-			taskContainer.append(listItem).append(finishByContainer).append(doneCheckbox).append(deleteButton);
-
-			// attach it to the unordered list with id="todo"
-			$("#todo").append(taskContainer);
-		} else {
-			// create a container for finished task to liv in
-			// <div><li class="finishedTask">finishedTask</li><div>
-			var finishedTaskContainer = $("<div>").attr("name", itemId);
-			var finishedTaskListItem = $("<li>").attr("class", "finishedTask").text(taskValue);
-			finishedTaskContainer.append(finishedTaskListItem);
-			$("#finished").append(finishedTaskContainer);
-		}
+		// attach it to the unordered list with id="todo"
+		$("#todo").append(taskContainer);
+	} else {
+		
+		// create a container for finished task to liv in
+		// <div><li class="finishedTask">finishedTask</li><div>
+		var finishedTaskContainer = $("<div>").attr("name", itemId);
+		var finishedTaskListItem = $("<li>").attr("class", "finishedTask").text(taskValue);
+		finishedTaskContainer.append(finishedTaskListItem);
+		$("#finished").append(finishedTaskContainer);
 	}
 };
 

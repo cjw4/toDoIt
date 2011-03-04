@@ -39,6 +39,21 @@ input[type="text"] {
 input[type="text"]#finishByInput {
 	width:100px;
 }
+input[type="text"].editable {
+	margin: 5px 0px 5px 0px;
+	padding:2px 7px;
+	border: solid 1px #C5C5C5;
+	font: normal 15px/100% Verdana, Tahoma, sans-serif;
+	width: 248px;
+	box-shadow: rgba(0,0,0, 0.1) 0px 0px 2px;  
+ 	-moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 2px;  
+ 	-webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 2px;
+	background: -webkit-gradient(linear, left top, left 25, from(#EEEEEE), to(#FFFFFF));  
+	background: -moz-linear-gradient(top, #EEEEEE, #FFFFFF 25px);
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
 input:hover, input:focus {
 	border-color: #A9A9A9;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 2px;

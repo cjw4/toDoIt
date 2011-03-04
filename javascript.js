@@ -88,6 +88,7 @@ function getTaskItem(itemId) {
 		var taskContainer = $("<div>").attr("id", itemId);
 		var listItem = $("<li>").attr("class", "task");
 		listItem.text(taskValue);
+		listItem.bind("click", function() {editTask(taskValue, this, itemId);}, false);
 
 		// create a container for the finishByInput to live in
 		// <span id="finishBy">finishByInput goes here</span>
@@ -163,3 +164,24 @@ function clearLog() {
 	}		
 };
 
+function editTask(taskValue, ctrl, itemId) {
+	var editableItem = document.createElement("input");
+	editableItem.setAttribute("type", "text");
+	editableItem.className= "editable";
+	editableItem.value = taskValue;
+	ctrl.parentNode.replaceChild(editableItem ,ctrl);
+	editableItem.focus();
+	editableItem.addEventListener("blur", function() {
+		var newListItem = document.createElement("li");
+		newListItem.className = "task";
+		newListItem.appendChild(document.createTextNode(editableItem.value));
+		this.parentNode.replaceChild(newListItem, this);
+		newListItem.addEventListener("click", function() {editTask(editableItem.value, this, itemId);}, false);
+		
+		// put new value into localStorage
+		var taskArray = localStorage.getItem(itemId).split(";");
+		taskArray[0] = editableItem.value;
+		localStorage.setItem(itemId, taskArray.join(";"));
+		
+	});
+};

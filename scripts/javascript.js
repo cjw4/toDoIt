@@ -1,3 +1,8 @@
+// key bindings
+$(window).jkey("enter", addTask);
+$(window).jkey("shift+c", clearLog);
+
+// DOM Ready
 $(document).ready(function() {
 
 	// addTask event handler
@@ -5,7 +10,11 @@ $(document).ready(function() {
 	
 	// clearLog event handler
 	$("#clearLog").bind("click", clearLog); 
-		
+	
+	// set focus to the task input
+	document.getElementById("todoInput").focus();
+	
+	// display the time	
 	var newDate = new Date();
 	var dayOfWeek = newDate.getDay();
 	var month = newDate.getMonth();

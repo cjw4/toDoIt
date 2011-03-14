@@ -161,9 +161,13 @@ ul {
 }
 #footer {
 	font: normal 10px/100% Verdana, Tahoma, sans-serif;
-	float:left;
-	text-align:left;
 }
 #footer p {
 	margin:5px;
+	display:inline;
+	float:left;
+}
+#footer > a {
+	display:inline-block;
+	float:right;
 }
